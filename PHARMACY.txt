@@ -1,0 +1,74 @@
+cqlsh>Create keyspace pharmacy with replication = {'class': 'SimpleStrategy', 'replication_factor': 1};
+
+cqlsh>use pharmacy;
+
+cqlsh:pharmacy>CREATE TABLE drugs (drug_id uuid,name text,description text,quantity int,price float,PRIMARY KEY (drug_id));
+
+cqlsh:pharmacy>CREATE TABLE orders (order_id uuid,date timestamp,customer_id uuid,items list<frozen<tuple<uuid, int>>>,total float,PRIMARY KEY (order_id));
+
+cqlsh:pharmacy>CREATE TABLE customers (    customer_id uuid,    name text,    email text,    phone text,    address text,    PRIMARY KEY (customer_id));
+
+cqlsh:pharmacy>Insert into drugs (drug_id, name, description, quantity, price)Values (uuid(), 'Aspirin', 'Pain reliever', 100, 0.99);
+
+cqlsh:pharmacy>INSERT INTO drugs (drug_id, name, description, quantity, price)VALUES (uuid(), 'Ibuprofen', 'Pain reliever', 50, 1.99);
+
+cqlsh:pharmacy>INSERT INTO drugs (drug_id, name, description, quantity, price)VALUES (uuid(), 'Lipitor', 'Cholesterol-lowering medication', 25, 4.99);
+
+cqlsh:pharmacy>INSERT INTO drugs (drug_id, name, description, quantity, price)VALUES (uuid(), 'Amoxicillin', 'Antibiotic', 75, 2.99);
+
+cqlsh:pharmacy>INSERT INTO drugs (drug_id, name, description, quantity, price)VALUES (uuid(), 'Naproxen', 'Pain reliever', 30, 2.49);
+
+cqlsh:pharmacy>INSERT INTO drugs (drug_id, name, description, quantity, price)VALUES (uuid(), 'Metformin', 'Diabetes medication', 20, 1.99);
+
+cqlsh:pharmacy>INSERT INTO customers (customer_id, name, email, phone, address)VALUES (uuid(), 'shasi', 'shasi@gmail.com', '9781234657', 'perundurai');
+
+cqlsh:pharmacy>INSERT INTO customers (customer_id, name, email, phone, address)VALUES (uuid(), 'sha', 'sha@gmail.com', '9966778123', 'thindal');
+
+cqlsh:pharmacy>INSERT INTO customers (customer_id, name, email, phone, address)VALUES (uuid(), 'shiva', 'shiva@gmail.com', '9987654321', 'Andhra');
+
+cqlsh:pharmacy>INSERT INTO customers (customer_id, name, email, phone, address)VALUES (uuid(), 'anand', 'anand@gmail.com', '7010777632', 'Kochin');
+
+cqlsh:pharmacy>INSERT INTO customers (customer_id, name, email, phone, address)VALUES (uuid(), 'shasianand','shasianand@gmail.com', '7010701022', 'Erode');
+
+cqlsh:pharmacy>INSERT INTO customers (customer_id, name, email, phone, address)VALUES (uuid(), 'shasikutty','shasikutty@gmail.com', '9791666115', 'perundurai');
+
+cqlsh:pharmacy>INSERT INTO orders (order_id, date, customer_id, items, total)VALUES (uuid(), toTimestamp(now()),59fb7f5f-17af-493a-8318-2751a5cb0cfe, [(133a3a8b-ff4b-4c6b-a26f-f59e56b20ce9, 2), (1b890ca4-92a9-4db4-af12-4a95a5e09392, 1)], 3.97);
+
+cqlsh:pharmacy>INSERT INTO orders (order_id, date, customer_id, items, total)VALUES (uuid(), toTimestamp(now()),bc3bf4aa-2c6a-4e5c-ab54-f2fe6a9f0462, [( 32173807-0fa3-458c-9c83-be9296ca4029, 3)], 14.97);
+
+cqlsh:pharmacy>INSERT INTO orders (order_id, date, customer_id, items, total)VALUES (uuid(), toTimestamp(now()), 8c542b29-8d6d-4e33-9108-03bbe9a45fac, [( 4845d8be-d905-455e-b66c-e728bef4a430, 1), ( 6c97b143-2924-493b-85f6-5179f6e4f5ab, 2)], 6.97);
+
+cqlsh:pharmacy> select * from drugs;
+
+ drug_id                              | description                     | name        | price | quantity
+--------------------------------------+---------------------------------+-------------+-------+----------
+ 0d1ddf38-ea06-456f-a89b-f2f8f96b8bc6 |                      Antibiotic | Amoxicillin |  2.99 |       75
+ 1b890ca4-92a9-4db4-af12-4a95a5e09392 |                   Pain reliever |   Ibuprofen |  1.99 |       50
+ 133a3a8b-ff4b-4c6b-a26f-f59e56b20ce9 |                   Pain reliever |     Aspirin |  0.99 |      100
+ 4845d8be-d905-455e-b66c-e728bef4a430 |             Diabetes medication |   Metformin |  1.99 |       20
+ 32173807-0fa3-458c-9c83-be9296ca4029 | Cholesterol-lowering medication |     Lipitor |  4.99 |       25
+ 6c97b143-2924-493b-85f6-5179f6e4f5ab |                   Pain reliever |    Naproxen |  2.49 |       30
+
+(6 rows)
+cqlsh:pharmacy> Select * from customers;
+
+ customer_id                          | address    | email                | name       | phone
+--------------------------------------+------------+----------------------+------------+------------
+ 59fb7f5f-17af-493a-8318-2751a5cb0cfe |     Kochin |      anand@gmail.com |      anand | 7010777632
+ 8c542b29-8d6d-4e33-9108-03bbe9a45fac |    thindal |        sha@gmail.com |        sha | 9966778123
+ b6a57b99-1608-4f0e-8213-056355ea4e89 | perundurai |      shasi@gmail.com |      shasi | 9781234657
+ 5b5bcabe-a752-43df-b9ed-56443630b331 | perundurai | shasikutty@gmail.com | shasikutty | 9791666115
+ bc3bf4aa-2c6a-4e5c-ab54-f2fe6a9f0462 |     Andhra |      shiva@gmail.com |      shiva | 9987654321
+ 2aeebdc1-35bf-43c8-9b50-975985b291af |      Erode | shasianand@gmail.com | shasianand | 7010701022
+
+(6 rows)
+cqlsh:pharmacy> Select * from orders;
+
+ order_id                             | customer_id                          | date                            | items                                                                                  | total
+--------------------------------------+--------------------------------------+---------------------------------+----------------------------------------------------------------------------------------+-------
+ 40b47260-d8d4-4982-ba50-a3c6c94e85d1 | 59fb7f5f-17af-493a-8318-2751a5cb0cfe | 2023-03-16 15:01:50.689000+0000 | [(133a3a8b-ff4b-4c6b-a26f-f59e56b20ce9, 2), 
+(1b890ca4-92a9-4db4-af12-4a95a5e09392, 1)] |  3.97
+
+ c35c66f8-6dd4-4c49-af2d-60fc4d7cf91b | bc3bf4aa-2c6a-4e5c-ab54-f2fe6a9f0462 | 2023-03-16 15:03:30.229000+0000 | [(32173807-0fa3-458c-9c83-be9296ca4029, 3)] | 14.97
+
+ b008a350-286a-4d22-ad7b-3454ea6a5370 | 8c542b29-8d6d-4e33-9108-03bbe9a45fac | 2023-03-16 15:06:22.859000+0000 | [(4845d8be-d905-455e-b66c-e728bef4a430, 1), (6c97b143-2924-493b-85f6-5179f6e4f5ab, 2)] |  6.97
