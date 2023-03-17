@@ -6,7 +6,8 @@ This schema includes three tables:
          3)customers. 
 
 The drugs table stores information about each drug in the pharmacy, including its unique
-          drug_id, 
+          drug_id,
+          
           name, 
           description, 
           quantity, and 
