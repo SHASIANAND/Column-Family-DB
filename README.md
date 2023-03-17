@@ -33,7 +33,7 @@ The customers table stores information about each customer, including their uniq
           phone, and 
           address.
           
-        ![WhatsApp Image 2023-03-17 at 21 24 18](https://user-images.githubusercontent.com/113984771/225957319-99a1f6ce-65b1-46e1-875a-575acdf39d92.jpg)
+        ![WhatsApp Image 2023-03-17 at 21 24 18](https://user-images.githubusercontent.com/113984771/225958178-c14a55f0-37a7-4927-b17f-ab58800f743d.jpg)
 
 
 
