@@ -8,6 +8,74 @@ cqlsh:pharmacy>CREATE TABLE orders (order_id uuid,date timestamp,customer_id uui
 
 cqlsh:pharmacy>CREATE TABLE customers (    customer_id uuid,    name text,    email text,    phone text,    address text,    PRIMARY KEY (customer_id));
 
+cqlsh:pharmacy>describe drugs;
+CREATE TABLE pharmacy.drugs (
+    drug_id uuid PRIMARY KEY,
+    description text,
+    name text,
+    price float,
+    quantity int
+) WITH bloom_filter_fp_chance = 0.01
+    AND caching = {'keys': 'ALL', 'rows_per_partition': 'NONE'}
+    AND comment = ''
+    AND compaction = {'class': 'org.apache.cassandra.db.compaction.SizeTieredCompactionStrategy', 'max_threshold': '32', 'min_threshold': '4'}
+    AND compression = {'chunk_length_in_kb': '64', 'class': 'org.apache.cassandra.io.compress.LZ4Compressor'}
+    AND crc_check_chance = 1.0
+    AND dclocal_read_repair_chance = 0.1
+    AND default_time_to_live = 0
+    AND gc_grace_seconds = 864000
+    AND max_index_interval = 2048
+    AND memtable_flush_period_in_ms = 0
+    AND min_index_interval = 128
+    AND read_repair_chance = 0.0
+    AND speculative_retry = '99PERCENTILE';
+    
+cqlsh:pharmacy> describe customers;
+
+CREATE TABLE pharmacy.customers (
+    customer_id uuid PRIMARY KEY,
+    address text,
+    email text,
+    name text,
+    phone text
+) WITH bloom_filter_fp_chance = 0.01
+    AND caching = {'keys': 'ALL', 'rows_per_partition': 'NONE'}
+    AND comment = ''
+    AND compaction = {'class': 'org.apache.cassandra.db.compaction.SizeTieredCompactionStrategy', 'max_threshold': '32', 'min_threshold': '4'}
+    AND compression = {'chunk_length_in_kb': '64', 'class': 'org.apache.cassandra.io.compress.LZ4Compressor'}
+    AND crc_check_chance = 1.0
+    AND dclocal_read_repair_chance = 0.1
+    AND default_time_to_live = 0
+    AND gc_grace_seconds = 864000
+    AND max_index_interval = 2048
+    AND memtable_flush_period_in_ms = 0
+    AND min_index_interval = 128
+    AND read_repair_chance = 0.0
+    AND speculative_retry = '99PERCENTILE';
+
+cqlsh:pharmacy> describe orders;
+
+CREATE TABLE pharmacy.orders (
+    order_id uuid PRIMARY KEY,
+    customer_id uuid,
+    date timestamp,
+    items list<frozen<tuple<uuid, int>>>,
+    total float
+) WITH bloom_filter_fp_chance = 0.01
+    AND caching = {'keys': 'ALL', 'rows_per_partition': 'NONE'}
+    AND comment = ''
+    AND compaction = {'class': 'org.apache.cassandra.db.compaction.SizeTieredCompactionStrategy', 'max_threshold': '32', 'min_threshold': '4'}
+    AND compression = {'chunk_length_in_kb': '64', 'class': 'org.apache.cassandra.io.compress.LZ4Compressor'}
+    AND crc_check_chance = 1.0
+    AND dclocal_read_repair_chance = 0.1
+    AND default_time_to_live = 0
+    AND gc_grace_seconds = 864000
+    AND max_index_interval = 2048
+    AND memtable_flush_period_in_ms = 0
+    AND min_index_interval = 128
+    AND read_repair_chance = 0.0
+    AND speculative_retry = '99PERCENTILE';
+
 cqlsh:pharmacy>Insert into drugs (drug_id, name, description, quantity, price)Values (uuid(), 'Aspirin', 'Pain reliever', 100, 0.99);
 
 cqlsh:pharmacy>INSERT INTO drugs (drug_id, name, description, quantity, price)VALUES (uuid(), 'Ibuprofen', 'Pain reliever', 50, 1.99);
