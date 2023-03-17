@@ -33,7 +33,8 @@ The customers table stores information about each customer, including their uniq
           phone, and 
           address.
           
-          ![WhatsApp Image 2023-03-17 at 21 24 18](https://user-images.githubusercontent.com/113984771/225956270-1c613c0c-efcc-438c-8bc2-e13fe5b13e87.jpg)
+        ![WhatsApp Image 2023-03-17 at 21 24 18](https://user-images.githubusercontent.com/113984771/225957319-99a1f6ce-65b1-46e1-875a-575acdf39d92.jpg)
+
 
 
 The 'toTimestamp(now())' function call returns the current timestamp in Cassandra's internal format, which is used to record the date of the order.
